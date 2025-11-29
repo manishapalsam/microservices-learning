@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.dailycodebuffer</groupId>
+  <artifactId>microservices-learning</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>microservices-learning-parent</name>
+
+  <!-- I used the Spring Boot parent so children inherit plugin/dependency management -->
+  <!-- I kept the Spring Boot version you have in two modules (3.5.7). If mvn fails, change this to a valid version (e.g. 3.1.x). -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.5.7</version>
+    <relativePath/> 
+  </parent>
+
+  <properties>
+    <java.version>17</java.version>
+    <!-- Use a single spring-cloud BOM version for all modules (adjust if you want a newer one) -->
+    <spring-cloud.version>2023.0.3</spring-cloud.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Spring Cloud BOM (managed in parent) -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- centralize spring-boot-maven-plugin -->
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+
+<!--        &lt;!&ndash; optional: centralize maven-compiler-plugin settings &ndash;&gt;-->
+<!--        <plugin>-->
+<!--          <groupId>org.apache.maven.plugins</groupId>-->
+<!--          <artifactId>maven-compiler-plugin</artifactId>-->
+<!--          <version>3.10.1</version>-->
+<!--          <configuration>-->
+<!--            <source>${java.version}</source>-->
+<!--            <target>${java.version}</target>-->
+<!--          </configuration>-->
+<!--        </plugin>-->
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <modules>
+    <module>config-server</module>
+    <module>service-registry</module>
+    <module>department-service</module>
+  </modules>
+
+</project>
